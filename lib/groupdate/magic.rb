@@ -25,7 +25,7 @@ module Groupdate
       end
 
       column = relation.connection.quote_table_name(column)
-      time_zone = self.time_zone.tz_info.name
+      time_zone = self.time_zone.tzinfo.name
 
       adapter_name = relation.connection.adapter_name
       query =
