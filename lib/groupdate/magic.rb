@@ -25,7 +25,7 @@ module Groupdate
       end
 
       column = relation.connection.quote_table_name(column)
-      time_zone = self.time_zone
+      time_zone = self.time_zone.tz_info.name
 
       adapter_name = relation.connection.adapter_name
       query =
@@ -124,6 +124,7 @@ module Groupdate
         begin
           Hash[ relation.send(method, *args, &block).map{|k, v| [multiple_groups ? k[0...@group_index] + [cast_method.call(k[@group_index])] + k[(@group_index + 1)..-1] : cast_method.call(k), v] } ]
         rescue NoMethodError
+          puts "#{method} is undefined"
           raise "Be sure to install time zone support - https://github.com/ankane/groupdate#for-mysql"
         end
 
@@ -135,7 +136,7 @@ module Groupdate
     def time_zone
       @time_zone ||= begin
         time_zone = options[:time_zone] || Groupdate.time_zone || Time.zone || "Etc/UTC"
-        time_zone
+        time_zone.is_a?(ActiveSupport::TimeZone) ? time_zone : ActiveSupport::TimeZone[time_zone]
       end
     end
 
