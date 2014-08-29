@@ -25,7 +25,7 @@ module Groupdate
       end
 
       column = relation.connection.quote_table_name(column)
-      time_zone = self.time_zone.tzinfo.name
+      time_zone = self.time_zone
 
       adapter_name = relation.connection.adapter_name
       query =
@@ -135,7 +135,7 @@ module Groupdate
     def time_zone
       @time_zone ||= begin
         time_zone = options[:time_zone] || Groupdate.time_zone || Time.zone || "Etc/UTC"
-        time_zone.is_a?(ActiveSupport::TimeZone) ? time_zone : ActiveSupport::TimeZone[time_zone]
+        time_zone
       end
     end
 
