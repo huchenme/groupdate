@@ -5,7 +5,7 @@ require 'groupdate/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "groupdate"
-  spec.version       = Groupdate::VERSION
+  spec.version       = '2.2.1'
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["acekane1@gmail.com"]
   spec.description   = %q{The simplest way to group temporal data}
